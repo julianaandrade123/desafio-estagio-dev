@@ -1,73 +1,181 @@
-# Desafio técnico | Estágio em Desenvolvimento
+# Consigna — Simulador de Empréstimo Consignado
 
-**Simulador de Empréstimo Consignado** · Startup de tecnologia financeira
+## 1. Sobre o projeto
 
-## 1. Contexto e objetivo
+O Consigna é uma aplicação desenvolvida como parte de um desafio técnico para estágio em desenvolvimento de software. O objetivo é simular propostas de empréstimo consignado e comparar resultados retornados por diferentes instituições financeiras fictícias.
 
-Desenvolva um MVP de uma aplicação que permita a um cliente solicitar uma simulação de empréstimo consignado e consultar o resultado da avaliação em diferentes bancos.
+A aplicação permite informar dados do solicitante, consultar simuladores bancários independentes e visualizar os resultados consolidados em uma única interface.
 
-O foco é a construção de um serviço que consome e interpreta respostas de serviços de terceiros.
+## 2. Funcionalidades
 
-## 2. Requisitos mínimos
+- Coleta dos dados necessários para a simulação.
+- Validação dos dados informados pelo usuário.
+- Simulação de propostas por duas instituições financeiras fictícias.
+- Representação de cenários de aprovação e reprovação.
+- Normalização e consolidação dos resultados bancários.
+- Exibição dos resultados na interface.
+- Tratamento de falhas nas consultas às instituições, quando aplicável.
 
-- **Entrada de dados:** nome, e-mail, CPF, salário, CNPJ do empregador e outros campos que considerar pertinentes.
-- **Avaliação bancária:** simular chamadas a APIs externas de pelo menos dois bancos, com respostas de aprovação ou reprovação.
-- **Processamento:** interpretar, consolidar e apresentar o resultado individual de cada instituição financeira.
-- **Interface:** permitir realizar a simulação e visualizar os resultados de forma compreensível.
+> **Aviso:** os bancos e os resultados são fictícios. A aplicação não realiza consultas financeiras reais nem solicitações efetivas de empréstimo.
 
-## 3. Liberdade de implementação
+## 3. Tecnologias utilizadas
 
-Você pode utilizar qualquer linguagem e framework, preferencialmente **TypeScript**.
+- **TypeScript:** tipagem estática e organização do código.
+- **React:** construção da interface.
+- **Vite:** ambiente de desenvolvimento e compilação do frontend.
+- **Node.js:** ambiente de execução do backend.
+- **Express:** implementação da API HTTP, caso utilizado no backend.
+- **Vitest:** testes automatizados, caso configurado no projeto.
 
-O uso consciente de ferramentas de IA é permitido, desde que você compreenda e saiba explicar sua solução.
+## 4. Arquitetura
 
-Não serão fornecidos protótipos, arquitetura ou componentes visuais. Utilize apenas dados fictícios; não são necessárias APIs bancárias reais.
+O projeto está organizado em duas partes principais:
 
-### Espaço para propor
+### Frontend
 
-Os requisitos da seção 2 são o ponto de partida, não o teto. Queremos ver o que você faria se este produto fosse seu.
+Responsável pela interface, coleta dos dados do solicitante, envio das solicitações de simulação e apresentação dos resultados.
 
-Um caminho para pensar: coloque-se no lugar de quem usa e de quem depende deste serviço. De um lado, o cliente, que preenche os dados e fica esperando a resposta. Do outro, a empresa, que depende de bancos que ela não controla.
+### Backend
 
-No `README.md`, apresente cada proposta assim:
+Responsável pela API, validação dos dados, execução das simulações, comunicação com os adaptadores bancários fictícios e consolidação das respostas.
 
-1. **Problema:** o que você identificou.
-2. **Proposta:** o que você fez ou faria.
-3. **Por quê:** o que isso muda para o cliente ou para a operação.
+### Adaptadores bancários
 
-Separe o que foi **implementado** do que ficou só **planejado**. As planejadas vão em **ordem de prioridade**: o que você faria primeiro se tivesse mais uma semana.
+Cada instituição possui um adaptador próprio, permitindo separar as regras de simulação e facilitar a inclusão de novas instituições no futuro.
 
-Avaliamos a coerência das propostas com o problema, não a quantidade. Uma proposta bem justificada vale mais do que dez soltas.
+### Normalização dos resultados
 
-## 4. Critérios de avaliação (100 pontos)
+Os resultados retornados pelos adaptadores são convertidos para um formato comum, facilitando a comparação entre as instituições.
 
-| Critério | Pontos |
-| --- | :-: |
-| **Arquitetura:** estrutura da solução, separação de responsabilidades e desenho das integrações. | 30 |
-| **Controle e qualidade do código:** organização, legibilidade, validações e tratamento de falhas. | 30 |
-| **Implementação funcional:** execução da simulação, consumo das APIs simuladas e exibição dos resultados. | 20 |
-| **Capacidade propositiva:** melhorias coerentes além do mínimo, considerando usabilidade, segurança, qualidade ou infraestrutura. | 20 |
+## 5. Estrutura do projeto
 
-## 5. Entrega
+```text
+.
+├── backend/
+│   └── src/
+│       ├── integrations/
+│       ├── schemas/
+│       ├── services/
+│       ├── app.ts
+│       ├── server.ts
+│       └── types.ts
+├── frontend/
+│   └── src/
+│       ├── App.tsx
+│       ├── main.tsx
+│       └── styles.css
+├── .gitignore
+├── package.json
+└── README.md
+```
 
-Disponibilize o código em um repositório Git com um `README.md` contendo:
+## 6. Como executar o projeto
 
-- instruções de execução;
-- decisões técnicas;
-- limitações.
+### Pré-requisitos
 
-Descreva também as melhorias e proposições realizadas ou planejadas para o contexto do problema, explicando como facilitam o uso pelo cliente ou ampliam a segurança, a qualidade e a infraestrutura do serviço, no formato descrito em **Espaço para propor**.
+- Node.js em uma versão compatível com o projeto.
+- npm.
 
-### Prazo
+### Instalação
 
-**5 dias corridos**, contados a partir do recebimento deste desafio.
+Na raiz do projeto, execute:
 
-### Como enviar
+```bash
+npm install
+```
 
-Envie o link do seu repositório para **elias.santos@octafin.com.br** com o assunto **"Estágio Dev"**.
+### Ambiente de desenvolvimento
 
-Crie o seu próprio repositório: não abra pull request neste aqui, para que a sua solução não fique visível para os outros candidatos.
+```bash
+npm run dev
+```
 
----
+### Compilação
 
-> **Lembre-se:** este é um MVP com o simples propósito de avaliar suas habilidades dentro do contexto da nossa operação. Não se preocupe em entregar um produto completo, integrar bancos reais ou montar uma infraestrutura complexa. Priorize uma solução funcional, clara, bem estruturada e que você consiga explicar.
+```bash
+npm run build
+```
+
+### Testes
+
+```bash
+npm test
+```
+
+Os comandos acima são definidos no `package.json` da raiz. A execução depende de as dependências estarem instaladas e os scripts configurados corretamente.
+
+## 7. Decisões técnicas
+
+- **Separação entre frontend e backend:** facilita a manutenção e permite evoluir cada parte de forma independente.
+- **Adaptadores por instituição:** isolam o comportamento específico de cada banco e reduzem o acoplamento.
+- **Tipos compartilhados:** ajudam a manter a consistência dos dados trocados entre os componentes do sistema.
+- **Normalização das respostas:** permite comparar instituições mesmo quando suas implementações internas são diferentes.
+- **Validação de entrada:** reduz a possibilidade de processar dados inválidos.
+- **Testes automatizados:** ajudam a verificar comportamentos importantes e prevenir regressões.
+
+## 8. Limitações conhecidas
+
+- As instituições financeiras são simuladas e não utilizam APIs reais.
+- Os critérios de aprovação são fictícios e não representam políticas de crédito reais.
+- A aplicação não efetiva contratos nem realiza operações financeiras.
+- O comportamento de disponibilidade parcial depende da implementação de tratamento de falhas no backend.
+
+## 9. Melhorias implementadas
+
+### Problema: respostas bancárias em formatos diferentes
+
+**Proposta:** normalizar as respostas em uma estrutura comum.
+
+**Por quê:** facilita a consolidação e a comparação dos resultados.
+
+### Problema: dependência de instituições específicas
+
+**Proposta:** separar a integração de cada instituição em um adaptador.
+
+**Por quê:** permite adicionar ou substituir instituições com menor impacto no restante da aplicação.
+
+## 10. Melhorias planejadas
+
+### Prioridade alta — Persistência das simulações
+
+**Problema:** os resultados podem não ser mantidos após o encerramento da sessão.
+
+**Proposta:** adicionar persistência em banco de dados.
+
+**Por quê:** permitiria consultar o histórico de simulações e acompanhar sua evolução.
+
+### Prioridade alta — Segurança e proteção de dados
+
+**Problema:** dados como CPF e salário exigem proteção adequada.
+
+**Proposta:** implementar controles de acesso, minimização de dados, proteção de informações sensíveis e políticas de retenção.
+
+**Por quê:** reduzir riscos de exposição e preparar a aplicação para um cenário real.
+
+### Prioridade média — Integração com serviços externos
+
+**Problema:** os resultados são gerados por regras fictícias.
+
+**Proposta:** criar uma camada de integração configurável para conectar APIs de instituições autorizadas.
+
+**Por quê:** aproximar a aplicação de um cenário real sem acoplar o sistema a um único fornecedor.
+
+### Prioridade média — Observabilidade
+
+**Problema:** pode ser difícil identificar falhas durante as simulações.
+
+**Proposta:** adicionar logs estruturados, métricas e rastreamento das solicitações.
+
+**Por quê:** facilitar diagnóstico e monitoramento.
+
+### Prioridade baixa — Ampliação da cobertura de testes
+
+**Problema:** testes limitados podem deixar comportamentos importantes sem verificação.
+
+**Proposta:** ampliar os testes unitários e de integração, incluindo entradas inválidas, falhas parciais e cenários de aprovação e reprovação.
+
+**Por quê:** aumentar a confiabilidade e facilitar futuras alterações.
+
+## 11. Considerações finais
+
+O projeto demonstra uma abordagem modular para simulação e consolidação de propostas de empréstimo consignado. A separação entre interface, API, adaptadores e normalização dos resultados busca facilitar a manutenção, os testes e a evolução da aplicação.
